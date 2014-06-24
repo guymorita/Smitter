@@ -16,14 +16,22 @@ static User *currentUser = nil;
     if (currentUser == nil) {
         NSDictionary *dict = [[NSUserDefaults standardUserDefaults] objectForKey:@"current_user"];
         if (dict) {
-//            currentUser = [[User alloc] initWithDictionary:dict];
+            currentUser = [User setCurrentUser:dict];
         }
     }
+    
     return currentUser;
 }
 
-+ (void)setCurrentUser:(User *)user {
-    currentUser = user;
++ (User *)setCurrentUser:(NSDictionary *)user {
+    User *us = [[User alloc] init];
+    us.username = user[@"screen_name"];
+    us.location = user[@"location"];
+    us.followersCount = user[@"followers_count"];
+    us.fullName = user[@"name"];
+    us.profilePicURL = user[@"profile_image_url"];
+    currentUser = us;
+    return currentUser;
 }
 
 @end

@@ -37,4 +37,14 @@
     return [self GET:@"1.1/statuses/home_timeline.json" parameters:nil success:success failure:failure];
 }
 
+- (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    return [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:success failure:failure];
+}
+
+- (AFHTTPRequestOperation *)submitWithSuccess:(NSString *)tweetText success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    return [self POST:@"1.1/statuses/update.json" parameters:@{@"status":tweetText} success:success failure:failure];
+}
+
+
+
 @end

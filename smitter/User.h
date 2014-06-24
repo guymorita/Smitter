@@ -11,6 +11,12 @@
 @interface User : NSObject
 
 + (User *)currentUser;
-+ (void)setCurrentUser:(User *)user;
++ (User *)setCurrentUser:(NSDictionary *)user;
+
+@property (strong, nonatomic) NSString *username;
+@property (strong, nonatomic) NSString *fullName;
+@property (assign, nonatomic) int followersCount;
+@property (strong, nonatomic) NSString *location;
+@property (strong, nonatomic) NSString *profilePicURL;
 
 @end

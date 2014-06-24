@@ -40,9 +40,22 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
 //    self.appNavController = [[UINavigationController alloc] init];
-    self.appNavController = [[UINavigationController alloc] initWithRootViewController:[[LoginViewController alloc] init]];
-    self.window.rootViewController = self.appNavController;
 
+    
+    TwitterClient *client = [TwitterClient instance];
+    BDBOAuthToken *token = [client.requestSerializer accessToken];
+    NSArray *vcs = @[[[LoginViewController alloc] init], [[MainTableViewController alloc] init]];
+    NSInteger vcToStart = 0;
+    if (token) {
+        vcToStart = 1;
+    }
+    
+    self.appNavController = [[UINavigationController alloc] initWithRootViewController:vcs[vcToStart]];
+    self.appNavController.navigationBar.barTintColor = [UIColor colorWithRed:80.0f/255.0f green:172.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
+    
+    self.appNavController.navigationBar.opaque = YES;
+    
+    self.window.rootViewController = self.appNavController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;

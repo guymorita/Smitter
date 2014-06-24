@@ -9,8 +9,13 @@
 #import "MainTableViewController.h"
 #import "MainTimelineTableViewCell.h"
 #import "TwitterClient.h"
+#import "User.h"
+#import "ComposeViewController.h"
 
 @interface MainTableViewController ()
+{
+    MainTimelineTableViewCell *_stubCell;
+}
 @property (strong, nonatomic) IBOutlet UITableView *mainTableView;
 
 @end
@@ -21,17 +26,35 @@
 {
     [super viewDidLoad];
     
+    self.navigationItem.title = @"Smitter";
+    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc]
+                                     initWithTitle:@"Compose"
+                                     style:UIBarButtonItemStylePlain
+                                     target:self
+                                     action:@selector(openCompose:)];
+    
+    self.navigationItem.rightBarButtonItem = filterButton;
+    
     self.mainTableView.delegate = self;
-    [self.mainTableView registerNib:[UINib nibWithNibName:@"MainTimelineTableViewCell" bundle:nil] forCellReuseIdentifier:@"MainTimelineCell"];
+    UINib *cellNib = [UINib nibWithNibName:@"MainTimelineTableViewCell" bundle:nil];
+    [self.mainTableView registerNib:cellNib forCellReuseIdentifier:@"MainTimelineCell"];
+    _stubCell = [cellNib instantiateWithOwner:nil options:nil][0];
     
     TwitterClient *client = [TwitterClient instance];
     [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"Response %@", responseObject);
         self.mainTimelineTweets = responseObject;
         [self.mainTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Response failure");
+        NSLog(@"Home timeline failure");
     }];
+    
+    [client currentUserWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [User setCurrentUser:responseObject];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Failed to get current user");
+    }];
+    
+    
     
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -67,10 +90,30 @@
     MainTimelineTableViewCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"MainTimelineCell" forIndexPath:indexPath];
     NSDictionary *tweetDict = self.mainTimelineTweets[indexPath.row];
     MainTimelineCellModel *tweetModel = [[MainTimelineCellModel alloc] initWithDictionary:tweetDict];
-    tweetCell.tweet = tweetModel;
+    tweetCell.tweetModel = tweetModel;
     [tweetCell configure];
     
     return tweetCell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *tweetDict = self.mainTimelineTweets[indexPath.row];
+    MainTimelineCellModel *tweetModel = [[MainTimelineCellModel alloc] initWithDictionary:tweetDict];
+    _stubCell.tweetModel = tweetModel;
+    [_stubCell configure];
+        
+    CGFloat height = [_stubCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height;
+    return height + 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return UITableViewAutomaticDimension;
+}
+
+- (IBAction)openCompose:(id)sender {
+    ComposeViewController *composeVC = [[ComposeViewController alloc] init];
+    [self.navigationController pushViewController:composeVC animated:YES];
 }
 
 

@@ -11,8 +11,7 @@
 
 @interface MainTimelineTableViewCell : UITableViewCell
 
-@property (strong, nonatomic) MainTimelineCellModel *tweet;
-@property (weak, nonatomic) IBOutlet UILabel *tweetText;
+@property (strong, nonatomic) MainTimelineCellModel *tweetModel;
 
 - (void)configure;
 @end
