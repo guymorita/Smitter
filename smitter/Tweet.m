@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 geemoo. All rights reserved.
 //
 
-#import "MainTimelineCellModel.h"
+#import "Tweet.h"
 
-@implementation MainTimelineCellModel
+@implementation Tweet
 
 - (id)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -18,6 +18,8 @@
         self.profilePicURL = user[@"profile_image_url"];
         self.username = user[@"screen_name"];
         self.datePosted = user[@"created_at"];
+        self.retweetedCount = user[@"retweet_count"];
+        self.favoritedCount = user[@"favorite_count"];
         self.fullName = user[@"name"];
         NSDictionary *entities = dictionary[@"entities"];
         NSArray *media = entities[@"urls"];

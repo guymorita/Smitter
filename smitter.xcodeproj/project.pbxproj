@@ -15,6 +15,8 @@
 		BA035BD4195611E300C487D9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA035BD2195611E300C487D9 /* LoginViewController.xib */; };
 		BA4A7A731959049C002107C1 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA4A7A711959049C002107C1 /* ComposeViewController.m */; };
 		BA4A7A741959049C002107C1 /* ComposeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA4A7A721959049C002107C1 /* ComposeViewController.xib */; };
+		BA86016C195A21B2004476B2 /* TweetDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BA86016A195A21B2004476B2 /* TweetDetailsViewController.m */; };
+		BA86016D195A21B2004476B2 /* TweetDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BA86016B195A21B2004476B2 /* TweetDetailsViewController.xib */; };
 		BAAC503719560E4B0057A9A9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAC503619560E4B0057A9A9 /* Foundation.framework */; };
 		BAAC503919560E4B0057A9A9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAC503819560E4B0057A9A9 /* CoreGraphics.framework */; };
 		BAAC503B19560E4B0057A9A9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BAAC503A19560E4B0057A9A9 /* UIKit.framework */; };
@@ -29,7 +31,7 @@
 		BAAC505C19560E4B0057A9A9 /* smitterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAC505B19560E4B0057A9A9 /* smitterTests.m */; };
 		BAAC506819560E6E0057A9A9 /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAAC506619560E6E0057A9A9 /* MainTableViewController.m */; };
 		BAAC506919560E6E0057A9A9 /* MainTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAAC506719560E6E0057A9A9 /* MainTableViewController.xib */; };
-		BAB8E90F19566F96009B8C24 /* MainTimelineCellModel.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB8E90E19566F96009B8C24 /* MainTimelineCellModel.m */; };
+		BAB8E90F19566F96009B8C24 /* Tweet.m in Sources */ = {isa = PBXBuildFile; fileRef = BAB8E90E19566F96009B8C24 /* Tweet.m */; };
 		E71CE5F68B444D5DB09DF317 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7BBC039A8E47432CAED94D4A /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +60,9 @@
 		BA4A7A701959049C002107C1 /* ComposeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		BA4A7A711959049C002107C1 /* ComposeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		BA4A7A721959049C002107C1 /* ComposeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ComposeViewController.xib; sourceTree = "<group>"; };
+		BA860169195A21B2004476B2 /* TweetDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TweetDetailsViewController.h; sourceTree = "<group>"; };
+		BA86016A195A21B2004476B2 /* TweetDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TweetDetailsViewController.m; sourceTree = "<group>"; };
+		BA86016B195A21B2004476B2 /* TweetDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TweetDetailsViewController.xib; sourceTree = "<group>"; };
 		BAAC503319560E4B0057A9A9 /* smitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = smitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAAC503619560E4B0057A9A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		BAAC503819560E4B0057A9A9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -77,8 +82,8 @@
 		BAAC506519560E6E0057A9A9 /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
 		BAAC506619560E6E0057A9A9 /* MainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
 		BAAC506719560E6E0057A9A9 /* MainTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainTableViewController.xib; sourceTree = "<group>"; };
-		BAB8E90D19566F96009B8C24 /* MainTimelineCellModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTimelineCellModel.h; sourceTree = "<group>"; };
-		BAB8E90E19566F96009B8C24 /* MainTimelineCellModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTimelineCellModel.m; sourceTree = "<group>"; };
+		BAB8E90D19566F96009B8C24 /* Tweet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tweet.h; sourceTree = "<group>"; };
+		BAB8E90E19566F96009B8C24 /* Tweet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tweet.m; sourceTree = "<group>"; };
 		FCD782CB097C404992E16125 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -207,6 +212,9 @@
 		BAAC506A19560E740057A9A9 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BA860169195A21B2004476B2 /* TweetDetailsViewController.h */,
+				BA86016A195A21B2004476B2 /* TweetDetailsViewController.m */,
+				BA86016B195A21B2004476B2 /* TweetDetailsViewController.xib */,
 				BA4A7A701959049C002107C1 /* ComposeViewController.h */,
 				BA4A7A711959049C002107C1 /* ComposeViewController.m */,
 				BA4A7A721959049C002107C1 /* ComposeViewController.xib */,
@@ -223,8 +231,8 @@
 		BAB8E90C19566F77009B8C24 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				BAB8E90D19566F96009B8C24 /* MainTimelineCellModel.h */,
-				BAB8E90E19566F96009B8C24 /* MainTimelineCellModel.m */,
+				BAB8E90D19566F96009B8C24 /* Tweet.h */,
+				BAB8E90E19566F96009B8C24 /* Tweet.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -311,6 +319,7 @@
 				BA00216E19564F7A00FDD998 /* MainTimelineTableViewCell.xib in Resources */,
 				BAAC506919560E6E0057A9A9 /* MainTableViewController.xib in Resources */,
 				BA4A7A741959049C002107C1 /* ComposeViewController.xib in Resources */,
+				BA86016D195A21B2004476B2 /* TweetDetailsViewController.xib in Resources */,
 				BAAC504919560E4B0057A9A9 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -368,8 +377,9 @@
 				BAAC504719560E4B0057A9A9 /* AppDelegate.m in Sources */,
 				BA4A7A731959049C002107C1 /* ComposeViewController.m in Sources */,
 				BAAC504319560E4B0057A9A9 /* main.m in Sources */,
+				BA86016C195A21B2004476B2 /* TweetDetailsViewController.m in Sources */,
 				BAAC506819560E6E0057A9A9 /* MainTableViewController.m in Sources */,
-				BAB8E90F19566F96009B8C24 /* MainTimelineCellModel.m in Sources */,
+				BAB8E90F19566F96009B8C24 /* Tweet.m in Sources */,
 				BA035BD3195611E300C487D9 /* LoginViewController.m in Sources */,
 				BA00216D19564F7A00FDD998 /* MainTimelineTableViewCell.m in Sources */,
 			);

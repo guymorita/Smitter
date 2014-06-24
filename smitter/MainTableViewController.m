@@ -11,6 +11,7 @@
 #import "TwitterClient.h"
 #import "User.h"
 #import "ComposeViewController.h"
+#import "TweetDetailsViewController.h"
 
 @interface MainTableViewController ()
 {
@@ -43,6 +44,7 @@
     TwitterClient *client = [TwitterClient instance];
     [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.mainTimelineTweets = responseObject;
+        NSLog(@"%@", responseObject);
         [self.mainTableView reloadData];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Home timeline failure");
@@ -89,7 +91,7 @@
    
     MainTimelineTableViewCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"MainTimelineCell" forIndexPath:indexPath];
     NSDictionary *tweetDict = self.mainTimelineTweets[indexPath.row];
-    MainTimelineCellModel *tweetModel = [[MainTimelineCellModel alloc] initWithDictionary:tweetDict];
+    Tweet *tweetModel = [[Tweet alloc] initWithDictionary:tweetDict];
     tweetCell.tweetModel = tweetModel;
     [tweetCell configure];
     
@@ -99,7 +101,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSDictionary *tweetDict = self.mainTimelineTweets[indexPath.row];
-    MainTimelineCellModel *tweetModel = [[MainTimelineCellModel alloc] initWithDictionary:tweetDict];
+    Tweet *tweetModel = [[Tweet alloc] initWithDictionary:tweetDict];
     _stubCell.tweetModel = tweetModel;
     [_stubCell configure];
         
@@ -109,6 +111,14 @@
 
 - (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return UITableViewAutomaticDimension;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath; {
+    NSDictionary *tweetDict = self.mainTimelineTweets[indexPath.row];
+    TweetDetailsViewController *tweetDetails = [[TweetDetailsViewController alloc] init];
+    tweetDetails.tweetModel = [[Tweet alloc] initWithDictionary:tweetDict];
+    
+    [self.navigationController pushViewController:tweetDetails animated:YES];
 }
 
 - (IBAction)openCompose:(id)sender {

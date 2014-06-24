@@ -64,6 +64,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (void)preloadText:(NSString *)text username:(NSString *)username {
+    
+}
+
 - (IBAction)composeSubmit:(id)sender {
     TwitterClient *client = [TwitterClient instance];
     [client submitWithSuccess:self.textBox.text success:^(AFHTTPRequestOperation *operation, id responseObject) {

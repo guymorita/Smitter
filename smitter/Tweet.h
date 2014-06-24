@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MainTimelineCellModel : NSObject
+@interface Tweet : NSObject
 
 @property (strong, nonatomic) NSString *tweetText;
 @property (strong, nonatomic) NSString *fullName;
@@ -16,6 +16,8 @@
 @property (strong, nonatomic) NSString *profilePicURL;
 @property (strong, nonatomic) NSString *linkURL;
 @property (strong, nonatomic) NSString *datePosted;
+@property (strong, nonatomic) NSString *retweetedCount;
+@property (strong, nonatomic) NSString *favoritedCount;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
