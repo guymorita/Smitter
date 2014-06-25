@@ -14,4 +14,5 @@
 @property (strong, nonatomic) Tweet *tweetModel;
 
 - (void)configure;
++ (NSDateFormatter *)dateFormatter;
 @end

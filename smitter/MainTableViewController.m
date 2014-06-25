@@ -30,15 +30,16 @@
     [super viewDidLoad];
     
     self.navigationItem.title = @"Smitter";
-    UIBarButtonItem *filterButton = [[UIBarButtonItem alloc]
+    UIBarButtonItem *composeButton = [[UIBarButtonItem alloc]
                                      initWithTitle:@"Compose"
                                      style:UIBarButtonItemStylePlain
                                      target:self
                                      action:@selector(openCompose:)];
     
-    self.navigationItem.rightBarButtonItem = filterButton;
+    self.navigationItem.rightBarButtonItem = composeButton;
     
     self.mainTableView.delegate = self;
+    
     UINib *cellNib = [UINib nibWithNibName:@"MainTimelineTableViewCell" bundle:nil];
     [self.mainTableView registerNib:cellNib forCellReuseIdentifier:@"MainTimelineCell"];
     _stubCell = [cellNib instantiateWithOwner:nil options:nil][0];
@@ -72,7 +73,7 @@
 - (void)refreshTweets {
     [self.client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         self.mainTimelineTweets = responseObject;
-        NSLog(@"%@", responseObject);
+//        NSLog(@"%@", responseObject);
         [self.mainTableView reloadData];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {

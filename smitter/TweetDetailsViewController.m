@@ -10,6 +10,7 @@
 #import "ComposeViewController.h"
 #import "UIImageView+AFNetworking.h"
 #import "TwitterClient.h"
+#import "MainTimelineTableViewCell.h"
 
 
 @interface TweetDetailsViewController ()
@@ -24,7 +25,10 @@
 - (IBAction)fireReply:(id)sender;
 - (IBAction)fireRetweet:(id)sender;
 - (IBAction)fireFavorite:(id)sender;
-
+@property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UIButton *retweetButtonGreen;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (weak, nonatomic) IBOutlet UIButton *favoriteButtonStar;
 
 @end
 
@@ -44,10 +48,15 @@
     self.fullName.text = self.tweetModel.fullName;
     self.username.text = self.tweetModel.username;
     self.tweetText.text = self.tweetModel.tweetText;
-    self.numRetweets.text = self.tweetModel.retweetedCount;
-    self.numFavorites.text = self.tweetModel.favoritedCount;
-    self.date.text = self.tweetModel.datePosted;
+    
+    NSDate *date = [[MainTimelineTableViewCell dateFormatter] dateFromString:self.tweetModel.datePosted];
+    NSString *prettyDate = [MHPrettyDate prettyDateFromDate:date withFormat:MHPrettyDateFormatTodayTimeOnly];
+    self.date.text = prettyDate;
+    
+    self.numRetweets.text = [self.tweetModel.retweetedCount stringValue];
+    self.numFavorites.text = [self.tweetModel.favoritedCount stringValue];
     self.navigationItem.title = self.tweetModel.username;
+    
     NSURL *url = [NSURL URLWithString:self.tweetModel.profilePicURL];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [self.profilePic setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
@@ -67,6 +76,8 @@
     [self configure];
     self.profilePic.clipsToBounds = YES;
     self.profilePic.layer.cornerRadius = 5;
+    self.retweetButtonGreen.hidden = YES;
+    self.favoriteButtonStar.hidden = YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -78,6 +89,8 @@
 - (IBAction)fireRetweet:(id)sender {
     [self.client retweetWithSuccess:self.tweetModel.tweetID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Retweet Success %@", responseObject);
+        self.retweetButton.hidden = YES;
+        self.retweetButtonGreen.hidden = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Retweet Failure %@", error);
     }];
@@ -87,6 +100,8 @@
 - (IBAction)fireFavorite:(id)sender {
     [self.client favoriteWithSuccess:self.tweetModel.tweetID success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"Favorite with Success %@", responseObject);
+        self.favoriteButton.hidden = YES;
+        self.favoriteButtonStar.hidden = NO;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Favorite failed %@", error);
     }];

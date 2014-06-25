@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+#import <MHPrettyDate.h>
 
 @interface TweetDetailsViewController : UIViewController
 

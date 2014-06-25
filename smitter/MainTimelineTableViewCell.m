@@ -8,7 +8,7 @@
 
 #import "MainTimelineTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
-
+#import <MHPrettyDate.h>
 
 @interface MainTimelineTableViewCell ()
 
@@ -37,12 +37,22 @@
     // Configure the view for the selected state
 }
 
++ (NSDateFormatter *)dateFormatter {
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+    dateFormatter.dateFormat = @"EEE MMM d HH:mm:ss ZZZZ yyyy";
+    return dateFormatter;
+}
+
 - (void)configure {
     self.tweetText.text = self.tweetModel.tweetText;
     self.fullName.text = self.tweetModel.fullName;
     self.username.text = self.tweetModel.username;
     self.linkURL.text = self.tweetModel.linkURL;
-    self.sinceDatePosted.text = self.tweetModel.datePosted;
+    NSDate *date = [[MainTimelineTableViewCell dateFormatter] dateFromString:self.tweetModel.datePosted];
+    NSString *prettyDate = [MHPrettyDate prettyDateFromDate:date withFormat:MHPrettyDateShortRelativeTime];
+    self.sinceDatePosted.text = prettyDate;
+    
     NSURL *url = [NSURL URLWithString:self.tweetModel.profilePicURL];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
     [self.profilePic setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {

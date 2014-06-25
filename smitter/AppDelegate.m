@@ -39,8 +39,6 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-//    self.appNavController = [[UINavigationController alloc] init];
-
     
     TwitterClient *client = [TwitterClient instance];
     BDBOAuthToken *token = [client.requestSerializer accessToken];
@@ -54,6 +52,11 @@
     self.appNavController.navigationBar.barTintColor = [UIColor colorWithRed:80.0f/255.0f green:172.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
     
     self.appNavController.navigationBar.opaque = YES;
+    
+    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
+    [self.appNavController.navigationBar setTitleTextAttributes:attributes];
+    self.appNavController.navigationBar.tintColor = [UIColor whiteColor];
+    
     
     self.window.rootViewController = self.appNavController;
     self.window.backgroundColor = [UIColor whiteColor];

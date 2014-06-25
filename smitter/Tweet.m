@@ -14,13 +14,14 @@
     self = [super init];
     if (self) {
         self.tweetText = dictionary[@"text"];
+        self.retweetedCount = dictionary[@"retweet_count"];
+        self.favoritedCount = dictionary[@"favorite_count"];
         NSDictionary *user = dictionary[@"user"];
         self.profilePicURL = user[@"profile_image_url"];
         NSString *userat = @"@";
         self.username = [userat stringByAppendingString:user[@"screen_name"]];
-        self.datePosted = user[@"created_at"];
-        self.retweetedCount = user[@"retweet_count"];
-        self.favoritedCount = user[@"favorite_count"];
+        self.datePosted = dictionary[@"created_at"];
+
         self.fullName = user[@"name"];
         NSDictionary *entities = dictionary[@"entities"];
         NSArray *media = entities[@"urls"];
