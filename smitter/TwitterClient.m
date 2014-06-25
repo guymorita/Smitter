@@ -33,8 +33,12 @@
     
 }
 
-- (AFHTTPRequestOperation *)homeTimelineWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
-    return [self GET:@"1.1/statuses/home_timeline.json" parameters:nil success:success failure:failure];
+- (AFHTTPRequestOperation *)homeTimelineWithSuccess:(NSString *)lastTweetID success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSMutableDictionary *parameters = [[NSMutableDictionary alloc] init];
+    if (lastTweetID){
+        [parameters setObject:lastTweetID forKey:@"max_id"];
+    }
+    return [self GET:@"1.1/statuses/home_timeline.json" parameters:parameters success:success failure:failure];
 }
 
 - (AFHTTPRequestOperation *)currentUserWithSuccess:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {

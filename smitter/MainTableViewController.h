@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MainTableViewController : UITableViewController <UITableViewDataSource>
+@interface MainTableViewController : UITableViewController <UITableViewDataSource, UIScrollViewDelegate>
 
-@property (strong, nonatomic) NSArray *mainTimelineTweets;
+@property (strong, nonatomic) NSMutableArray *mainTimelineTweets;
 
 @end

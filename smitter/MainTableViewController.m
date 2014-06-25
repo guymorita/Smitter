@@ -37,6 +37,7 @@
                                      action:@selector(openCompose:)];
     
     self.navigationItem.rightBarButtonItem = composeButton;
+    self.navigationItem.hidesBackButton = YES;
     
     self.mainTableView.delegate = self;
     
@@ -45,7 +46,7 @@
     _stubCell = [cellNib instantiateWithOwner:nil options:nil][0];
     
     self.client = [TwitterClient instance];
-    [self refreshTweets];
+    [self refreshTweets:nil];
     
     [self.client currentUserWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [User setCurrentUser:responseObject];
@@ -67,17 +68,21 @@
 }
 
 - (void)pullToRefresh:(UIRefreshControl *)refreshControl {
-    [self refreshTweets];
+    [self refreshTweets:nil];
 }
 
-- (void)refreshTweets {
-    [self.client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.mainTimelineTweets = responseObject;
-//        NSLog(@"%@", responseObject);
+- (void)refreshTweets:(NSString *)lastTweetID {
+    [self.client homeTimelineWithSuccess:lastTweetID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if (self.mainTimelineTweets.count > 0) {
+            [self.mainTimelineTweets addObjectsFromArray:responseObject];
+        } else {
+            self.mainTimelineTweets = [[NSMutableArray alloc] initWithArray: responseObject];
+            NSLog(@"initial stuff");
+        }
         [self.mainTableView reloadData];
         [self.refreshControl endRefreshing];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Home timeline failure");
+        NSLog(@"Home timeline failure %@", error);
     }];
 }
 
@@ -135,6 +140,12 @@
     tweetDetails.tweetModel = [[Tweet alloc] initWithDictionary:tweetDict];
     
     [self.navigationController pushViewController:tweetDetails animated:YES];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.row == self.mainTimelineTweets.count -1) {
+        [self refreshTweets:self.mainTimelineTweets[self.mainTimelineTweets.count -1][@"id"]];
+    }
 }
 
 - (IBAction)openCompose:(id)sender {
