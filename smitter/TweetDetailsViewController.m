@@ -8,6 +8,9 @@
 
 #import "TweetDetailsViewController.h"
 #import "ComposeViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "TwitterClient.h"
+
 
 @interface TweetDetailsViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *profilePic;
@@ -17,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *date;
 @property (weak, nonatomic) IBOutlet UILabel *numRetweets;
 @property (weak, nonatomic) IBOutlet UILabel *numFavorites;
+@property (weak, nonatomic) TwitterClient *client;
 - (IBAction)fireReply:(id)sender;
 - (IBAction)fireRetweet:(id)sender;
 - (IBAction)fireFavorite:(id)sender;
@@ -44,6 +48,14 @@
     self.numFavorites.text = self.tweetModel.favoritedCount;
     self.date.text = self.tweetModel.datePosted;
     self.navigationItem.title = self.tweetModel.username;
+    NSURL *url = [NSURL URLWithString:self.tweetModel.profilePicURL];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
+    [self.profilePic setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        self.profilePic.image = image;
+    } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
+        NSLog(@"Failed to load picture on compose");
+    }];
+    self.client = [TwitterClient instance];
 }
 
 - (void)viewDidLoad
@@ -53,6 +65,8 @@
 
     // Do any additional setup after loading the view from its nib.
     [self configure];
+    self.profilePic.clipsToBounds = YES;
+    self.profilePic.layer.cornerRadius = 5;
 }
 
 - (void)didReceiveMemoryWarning
@@ -62,13 +76,26 @@
 }
 
 - (IBAction)fireRetweet:(id)sender {
+    [self.client retweetWithSuccess:self.tweetModel.tweetID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Retweet Success %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Retweet Failure %@", error);
+    }];
+    
 }
 
 - (IBAction)fireFavorite:(id)sender {
+    [self.client favoriteWithSuccess:self.tweetModel.tweetID success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"Favorite with Success %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Favorite failed %@", error);
+    }];
 }
 
 - (IBAction)fireReply:(id)sender {
-//    ComposeViewController *composeVC = [[ComposeViewController alloc] init];
+    ComposeViewController *composeVC = [[ComposeViewController alloc] init];
+    [composeVC preloadText:self.tweetModel.username];
+    [self.navigationController pushViewController:composeVC animated:YES];
 }
 
 @end

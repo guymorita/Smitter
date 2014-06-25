@@ -45,6 +45,16 @@
     return [self POST:@"1.1/statuses/update.json" parameters:@{@"status":tweetText} success:success failure:failure];
 }
 
+- (AFHTTPRequestOperation *)retweetWithSuccess:(NSString *)tweetID success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *postURL = [NSString stringWithFormat:@"%@%@%@", @"1.1/statuses/retweet/", tweetID, @".json"];
+    return [self POST:postURL parameters:nil success:success failure:failure];
+}
+
+- (AFHTTPRequestOperation *)favoriteWithSuccess:(NSString *)tweetID success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    return [self POST:@"1.1/favorites/create.json" parameters:@{@"id": tweetID} success:success failure:failure];
+
+}
+
 
 
 @end

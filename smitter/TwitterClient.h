@@ -20,4 +20,8 @@
 
 - (AFHTTPRequestOperation *)submitWithSuccess:(NSString *)tweetText success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
 
+- (AFHTTPRequestOperation *)retweetWithSuccess:(NSString *)tweetID success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
+- (AFHTTPRequestOperation *)favoriteWithSuccess:(NSString *)tweetID success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure;
+
 @end

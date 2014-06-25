@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface ComposeViewController : UIViewController
-- (void)preloadText:(NSString *)text username:(NSString *)username;
+- (void)preloadText:(NSString *)username;
 
 @end

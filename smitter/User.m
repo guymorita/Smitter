@@ -25,7 +25,8 @@ static User *currentUser = nil;
 
 + (User *)setCurrentUser:(NSDictionary *)user {
     User *us = [[User alloc] init];
-    us.username = user[@"screen_name"];
+    us.username = [@"@" stringByAppendingString:user[@"screen_name"]]
+    ;
     us.location = user[@"location"];
     us.followersCount = user[@"followers_count"];
     us.fullName = user[@"name"];

@@ -17,6 +17,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *fullName;
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (weak, nonatomic) IBOutlet UITextView *textBox;
+@property (strong, nonatomic) NSString *preloadedText;
 @property (strong, nonatomic) User *currentUser;
 
 @end
@@ -54,6 +55,11 @@
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         NSLog(@"Failed to load picture on compose");
     }];
+    if (self.preloadedText) {
+            self.textBox.text = self.preloadedText;
+    }
+    self.profilePic.clipsToBounds = YES;
+    self.profilePic.layer.cornerRadius = 5;
     [self.textBox becomeFirstResponder];
     // Do any additional setup after loading the view from its nib.
 }
@@ -65,8 +71,9 @@
 }
 
 
-- (void)preloadText:(NSString *)text username:(NSString *)username {
-    
+- (void)preloadText:(NSString *)username {
+    NSString *preloadedText = [username stringByAppendingString:@" "];
+    self.preloadedText = preloadedText;
 }
 
 - (IBAction)composeSubmit:(id)sender {

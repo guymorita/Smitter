@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *fullName;
-@property (assign, nonatomic) int followersCount;
+@property (assign, nonatomic) NSString *followersCount;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *profilePicURL;
 

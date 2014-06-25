@@ -18,6 +18,8 @@
     MainTimelineTableViewCell *_stubCell;
 }
 @property (strong, nonatomic) IBOutlet UITableView *mainTableView;
+@property (strong, nonatomic) TwitterClient *client;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
 
 @end
 
@@ -41,20 +43,18 @@
     [self.mainTableView registerNib:cellNib forCellReuseIdentifier:@"MainTimelineCell"];
     _stubCell = [cellNib instantiateWithOwner:nil options:nil][0];
     
-    TwitterClient *client = [TwitterClient instance];
-    [client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        self.mainTimelineTweets = responseObject;
-        NSLog(@"%@", responseObject);
-        [self.mainTableView reloadData];
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Home timeline failure");
-    }];
+    self.client = [TwitterClient instance];
+    [self refreshTweets];
     
-    [client currentUserWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+    [self.client currentUserWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         [User setCurrentUser:responseObject];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Failed to get current user");
     }];
+    
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(pullToRefresh:) forControlEvents:UIControlEventValueChanged];
+    [self.mainTableView addSubview:self.refreshControl];
     
     
     
@@ -63,6 +63,21 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (void)pullToRefresh:(UIRefreshControl *)refreshControl {
+    [self refreshTweets];
+}
+
+- (void)refreshTweets {
+    [self.client homeTimelineWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        self.mainTimelineTweets = responseObject;
+        NSLog(@"%@", responseObject);
+        [self.mainTableView reloadData];
+        [self.refreshControl endRefreshing];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Home timeline failure");
+    }];
 }
 
 - (void)didReceiveMemoryWarning

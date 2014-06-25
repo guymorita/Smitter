@@ -16,7 +16,8 @@
         self.tweetText = dictionary[@"text"];
         NSDictionary *user = dictionary[@"user"];
         self.profilePicURL = user[@"profile_image_url"];
-        self.username = user[@"screen_name"];
+        NSString *userat = @"@";
+        self.username = [userat stringByAppendingString:user[@"screen_name"]];
         self.datePosted = user[@"created_at"];
         self.retweetedCount = user[@"retweet_count"];
         self.favoritedCount = user[@"favorite_count"];
@@ -26,8 +27,8 @@
         if (media.count > 0) {
             NSDictionary *urls = media[0];
             self.linkURL = urls[@"display_url"];
-
         }
+        self.tweetID = dictionary[@"id"];
     }
     return self;
 }

@@ -18,6 +18,7 @@
 @property (strong, nonatomic) NSString *datePosted;
 @property (strong, nonatomic) NSString *retweetedCount;
 @property (strong, nonatomic) NSString *favoritedCount;
+@property (strong, nonatomic) NSString *tweetID;
 
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 

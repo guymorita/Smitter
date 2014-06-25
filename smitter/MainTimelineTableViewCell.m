@@ -40,8 +40,7 @@
 - (void)configure {
     self.tweetText.text = self.tweetModel.tweetText;
     self.fullName.text = self.tweetModel.fullName;
-    NSString *username = @"@";
-    self.username.text = [username stringByAppendingString:self.tweetModel.username];
+    self.username.text = self.tweetModel.username;
     self.linkURL.text = self.tweetModel.linkURL;
     self.sinceDatePosted.text = self.tweetModel.datePosted;
     NSURL *url = [NSURL URLWithString:self.tweetModel.profilePicURL];

@@ -12,6 +12,5 @@
 @interface TweetDetailsViewController : UIViewController
 
 @property (strong, nonatomic) Tweet *tweetModel;
-- (void)configure;
 
 @end
