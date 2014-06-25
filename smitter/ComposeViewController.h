@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ComposeViewController : UIViewController
+@interface ComposeViewController : UIViewController <UITextViewDelegate>
 - (void)preloadText:(NSString *)username;
 
 @end
