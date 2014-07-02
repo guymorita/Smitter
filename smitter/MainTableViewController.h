@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HambaaagaViewController.h"
+
 
 @interface MainTableViewController : UITableViewController <UITableViewDataSource, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *mainTimelineTweets;
+// replace with delegate
+@property (strong, nonatomic) HambaaagaViewController *ham;
 
 @end

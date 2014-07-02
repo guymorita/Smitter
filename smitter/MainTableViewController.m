@@ -21,6 +21,7 @@
 @property (strong, nonatomic) TwitterClient *client;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 
+
 @end
 
 @implementation MainTableViewController
@@ -59,12 +60,13 @@
     [self.mainTableView addSubview:self.refreshControl];
     
     
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize target:self action:@selector(slideHamba)];
+
 }
 
 - (void)pullToRefresh:(UIRefreshControl *)refreshControl {
@@ -151,6 +153,10 @@
 - (IBAction)openCompose:(id)sender {
     ComposeViewController *composeVC = [[ComposeViewController alloc] init];
     [self.navigationController pushViewController:composeVC animated:YES];
+}
+
+- (void)slideHamba {
+    [self.ham slideHamba];
 }
 
 

@@ -7,9 +7,15 @@
 //
 
 #import "AppDelegate.h"
-#import "LoginViewController.h"
-#import "MainTableViewController.h"
 #import "TwitterClient.h"
+#import "HambaaagaViewController.h"
+
+@interface AppDelegate ()
+
+@property (strong, nonatomic) HambaaagaViewController *ham;
+
+@end
+
 
 @implementation NSURL (dictionaryFromQueryString)
 
@@ -40,25 +46,9 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     
-    TwitterClient *client = [TwitterClient instance];
-    BDBOAuthToken *token = [client.requestSerializer accessToken];
-    NSArray *vcs = @[[[LoginViewController alloc] init], [[MainTableViewController alloc] init]];
-    NSInteger vcToStart = 0;
-    if (token) {
-        vcToStart = 1;
-    }
+    self.ham = [[HambaaagaViewController alloc] init];
+    self.window.rootViewController = self.ham;
     
-    self.appNavController = [[UINavigationController alloc] initWithRootViewController:vcs[vcToStart]];
-    self.appNavController.navigationBar.barTintColor = [UIColor colorWithRed:80.0f/255.0f green:172.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
-    
-    self.appNavController.navigationBar.opaque = YES;
-    
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, nil];
-    [self.appNavController.navigationBar setTitleTextAttributes:attributes];
-    self.appNavController.navigationBar.tintColor = [UIColor whiteColor];
-    
-    
-    self.window.rootViewController = self.appNavController;
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
@@ -107,9 +97,7 @@
                 [client fetchAccessTokenWithPath:@"/oauth/access_token" method:@"POST" requestToken:[BDBOAuthToken tokenWithQueryString:url.query] success:^(BDBOAuthToken *accessToken) {
                     NSLog(@"Got Access Token");
                     [client.requestSerializer saveAccessToken:accessToken];
-                    [self.appNavController popViewControllerAnimated:YES];
-                    MainTableViewController *mainVC = [[MainTableViewController alloc] init];
-                    [self.appNavController pushViewController:mainVC animated:YES];
+                    [self.ham pushToTimeline];
                     
                 } failure:^(NSError *error) {
                     NSLog(@"Didn't get Access Token");

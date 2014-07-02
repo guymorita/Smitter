@@ -31,6 +31,9 @@ static User *currentUser = nil;
     us.followersCount = user[@"followers_count"];
     us.fullName = user[@"name"];
     us.profilePicURL = user[@"profile_image_url"];
+    us.backgroundURL = user[@"profile_background_image_url"];
+    us.following = user[@"friends_count"];
+    us.favorites = user[@"favourites_count"];
     currentUser = us;
     return currentUser;
 }
