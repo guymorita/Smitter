@@ -23,6 +23,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *hambaFullName;
 @property (weak, nonatomic) IBOutlet UILabel *hambaUsername;
 @property (strong, nonatomic) User *currentUser;
+@property (strong, nonatomic)  NSArray *vcs;
 - (IBAction)onCompose:(id)sender;
 - (IBAction)onTimeline:(id)sender;
 - (IBAction)onProfile:(id)sender;
@@ -39,14 +40,14 @@
         BDBOAuthToken *token = [client.requestSerializer accessToken];
         MainTableViewController *mainVC = [[MainTableViewController alloc] init];
         mainVC.delegate = self;
-        NSArray *vcs = @[[[LoginViewController alloc] init], mainVC];
+        self.vcs = @[[[LoginViewController alloc] init], mainVC];
         NSInteger vcToStart = 0;
         if (token) {
             vcToStart = 1;
         }
 
         self.appNavController = [[UINavigationController alloc] init];
-        [self.appNavController setViewControllers:vcs];
+        [self.appNavController pushViewController:self.vcs[vcToStart] animated:YES];
         self.appNavController.navigationBar.barTintColor = [UIColor colorWithRed:80.0f/255.0f green:172.0f/255.0f blue:240.0f/255.0f alpha:1.0f];
 
         self.appNavController.navigationBar.opaque = YES;
@@ -116,7 +117,7 @@
 }
 
 - (void)pushToTimeline {
-    
+    [self.appNavController pushViewController:self.vcs[1] animated:YES];
 }
                                                                   
                                                                   
