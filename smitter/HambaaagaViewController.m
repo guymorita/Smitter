@@ -29,7 +29,7 @@
 
 @end
 
-@implementation HambaaagaViewController
+@implementation HambaaagaViewController 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -38,7 +38,7 @@
         TwitterClient *client = [TwitterClient instance];
         BDBOAuthToken *token = [client.requestSerializer accessToken];
         MainTableViewController *mainVC = [[MainTableViewController alloc] init];
-        mainVC.ham = self;
+        mainVC.delegate = self;
         NSArray *vcs = @[[[LoginViewController alloc] init], mainVC];
         NSInteger vcToStart = 0;
         if (token) {
@@ -111,7 +111,7 @@
 }
 
 - (IBAction)onProfile:(id)sender {
-    [self.appNavController pushViewController:[[ProfileViewController alloc] init] animated:YES];
+    [self.appNavController pushViewController:[[ProfileViewController alloc] initWithUsername:self.currentUser.username] animated:YES];
     [self slideHamba];
 }
 
@@ -137,6 +137,13 @@
 }
                                                                   
                                                                   
+#pragma mark - GuyProtocol
+
+- (void)showProfile:(id)sender username:(NSString *)username
+{
+    [self.appNavController pushViewController:[[ProfileViewController alloc] initWithUsername:username] animated:YES];
+}
+
 
 
 @end

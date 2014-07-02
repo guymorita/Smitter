@@ -10,4 +10,5 @@
 
 @interface ProfileViewController : UIViewController
 
+- (id) initWithUsername:(NSString *)username;
 @end

@@ -13,7 +13,9 @@
 @interface MainTableViewController : UITableViewController <UITableViewDataSource, UIScrollViewDelegate>
 
 @property (strong, nonatomic) NSMutableArray *mainTimelineTweets;
-// replace with delegate
-@property (strong, nonatomic) HambaaagaViewController *ham;
+@property (weak, nonatomic) id <HambaaagaViewControllerDelegate> delegate;
+
+- (void)showProfile:(NSString *)username;
+
 
 @end

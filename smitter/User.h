@@ -12,10 +12,11 @@
 
 + (User *)currentUser;
 + (User *)setCurrentUser:(NSDictionary *)user;
++ (User *)getUser:(NSDictionary *)user;
 
 @property (strong, nonatomic) NSString *username;
 @property (strong, nonatomic) NSString *fullName;
-@property (assign, nonatomic) NSNumber *followersCount;
+@property (strong, nonatomic) NSNumber *followersCount;
 @property (strong, nonatomic) NSString *location;
 @property (strong, nonatomic) NSString *profilePicURL;
 @property (strong, nonatomic) NSString *backgroundURL;

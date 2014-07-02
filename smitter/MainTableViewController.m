@@ -59,7 +59,6 @@
     [self.refreshControl addTarget:self action:@selector(pullToRefresh:) forControlEvents:UIControlEventValueChanged];
     [self.mainTableView addSubview:self.refreshControl];
     
-    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -113,6 +112,7 @@
 {
    
     MainTimelineTableViewCell *tweetCell = [tableView dequeueReusableCellWithIdentifier:@"MainTimelineCell" forIndexPath:indexPath];
+    tweetCell.mainVc = self;
     NSDictionary *tweetDict = self.mainTimelineTweets[indexPath.row];
     Tweet *tweetModel = [[Tweet alloc] initWithDictionary:tweetDict];
     tweetCell.tweetModel = tweetModel;
@@ -156,7 +156,11 @@
 }
 
 - (void)slideHamba {
-    [self.ham slideHamba];
+    [self.delegate slideHamba];
+}
+
+- (void)showProfile:(NSString *)username {
+    [self.delegate showProfile:self username:username];
 }
 
 

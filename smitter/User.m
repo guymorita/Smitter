@@ -25,8 +25,7 @@ static User *currentUser = nil;
 
 + (User *)setCurrentUser:(NSDictionary *)user {
     User *us = [[User alloc] init];
-    us.username = [@"@" stringByAppendingString:user[@"screen_name"]]
-    ;
+    us.username = [@"@" stringByAppendingString:user[@"screen_name"]];
     us.location = user[@"location"];
     us.followersCount = user[@"followers_count"];
     us.fullName = user[@"name"];
@@ -36,6 +35,19 @@ static User *currentUser = nil;
     us.favorites = user[@"favourites_count"];
     currentUser = us;
     return currentUser;
+}
+
++ (User *)getUser:(NSDictionary *)user {
+    User *us = [[User alloc] init];
+    us.username = [@"@" stringByAppendingString:user[@"screen_name"]];
+    us.location = user[@"location"];
+    us.followersCount = user[@"followers_count"];
+    us.fullName = user[@"name"];
+    us.profilePicURL = user[@"profile_image_url"];
+    us.backgroundURL = user[@"profile_background_image_url"];
+    us.following = user[@"friends_count"];
+    us.favorites = user[@"favourites_count"];
+    return us;
 }
 
 @end

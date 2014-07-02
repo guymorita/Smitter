@@ -8,7 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HambaaagaViewController : UIViewController
+
+@protocol HambaaagaViewControllerDelegate <NSObject>
+- (void)showProfile:(id)sender username:(NSString *)username;
+- (void)slideHamba;
+@end
+
+
+@interface HambaaagaViewController : UIViewController <HambaaagaViewControllerDelegate>
 - (void)pushToTimeline;
 - (void)slideHamba;
 

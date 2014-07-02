@@ -9,9 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
 
+#import "MainTableViewController.h"
+
+
 @interface MainTimelineTableViewCell : UITableViewCell
 
 @property (strong, nonatomic) Tweet *tweetModel;
+@property (nonatomic, weak)   MainTableViewController *mainVc;
+
 
 - (void)configure;
 + (NSDateFormatter *)dateFormatter;

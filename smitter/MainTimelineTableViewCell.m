@@ -9,6 +9,7 @@
 #import "MainTimelineTableViewCell.h"
 #import "UIImageView+AFNetworking.h"
 #import <MHPrettyDate.h>
+#import "ProfileViewController.h"
 
 @interface MainTimelineTableViewCell ()
 
@@ -16,8 +17,9 @@
 @property (weak, nonatomic) IBOutlet UILabel *fullName;
 @property (weak, nonatomic) IBOutlet UILabel *username;
 @property (weak, nonatomic) IBOutlet UILabel *linkURL;
-@property (weak, nonatomic) IBOutlet UIImageView *profilePic;
+@property (weak, nonatomic) IBOutlet UIButton *profilePicButton;
 @property (weak, nonatomic) IBOutlet UILabel *sinceDatePosted;
+- (IBAction)onImageTap:(id)sender;
 
 
 @end
@@ -26,8 +28,8 @@
 - (void)awakeFromNib
 {
     // Initialization code
-    self.profilePic.clipsToBounds = YES;
-    self.profilePic.layer.cornerRadius = 5;
+    self.profilePicButton.clipsToBounds = YES;
+    self.profilePicButton.layer.cornerRadius = 5;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -55,11 +57,17 @@
     
     NSURL *url = [NSURL URLWithString:self.tweetModel.profilePicURL];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
-    [self.profilePic setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
-        self.profilePic.image = image;
+    [self.profilePicButton.imageView setImageWithURLRequest:urlRequest placeholderImage:nil success:^(NSURLRequest *request, NSHTTPURLResponse *response, UIImage *image) {
+        [self.profilePicButton setImage:image forState:UIControlStateNormal];
     } failure:^(NSURLRequest *request, NSHTTPURLResponse *response, NSError *error) {
         NSLog(@"Failed to load picture");
     }];
+}
+
+
+
+- (IBAction)onImageTap:(id)sender {
+    [self.mainVc showProfile:self.tweetModel.username];
 }
 
 @end

@@ -45,6 +45,12 @@
     return [self GET:@"1.1/account/verify_credentials.json" parameters:nil success:success failure:failure];
 }
 
+- (AFHTTPRequestOperation *)getUserWithSuccess:(NSString *)username success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
+    NSString *clippedUsername = [username substringFromIndex:1];
+    NSString *getString = [NSString stringWithFormat:@"%@%@", @"1.1/users/show.json?screen_name=", [clippedUsername lowercaseString]];
+    return [self GET:getString parameters:nil success:success failure:failure];
+}
+
 - (AFHTTPRequestOperation *)submitWithSuccess:(NSString *)tweetText success:(void (^) (AFHTTPRequestOperation *operation, id responseObject))success failure:(void (^) (AFHTTPRequestOperation *operation, NSError *error))failure {
     return [self POST:@"1.1/statuses/update.json" parameters:@{@"status":tweetText} success:success failure:failure];
 }
